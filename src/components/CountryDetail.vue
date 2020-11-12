@@ -18,6 +18,10 @@
             <li class="list-group-item" v-if="isExpensive">
                 <span class="badge badge-danger badge-pill">Expensive!</span>
             </li>
+            <li class="list-group-item">
+                <button @click="toggleFavorite()" class="btn btn-success">Favorite</button>
+
+            </li>
 
         </ul>
     </div>
@@ -41,6 +45,9 @@
         methods:{
             setRating(value) {
                 this.$emit('rating',value);
+            },
+            toggleFavorite(){
+                this.$emit('favorite');
             }
 
         }

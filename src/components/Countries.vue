@@ -9,12 +9,14 @@
                         class="list-group-item"
                         v-for="country in data.countries"
                         :key="country.id">
-                <span :id="country.id"
-                      :title="country.details">
-                    {{ country.id }} - {{country.name}}
-                </span>
+                        <span :id="country.id"
+                             :title="country.details">
+                            {{ country.id }} - {{country.name}}
+                        </span>
                         <span class="float-right badge badge-secondary badge-pill"
                               v-if="country.rating !==0">{{country.rating}}</span>
+                        <span class="float-left badge badge-primary badge-pill"
+                              v-if="country.favorite === true">favorite</span>
                     </li>
                 </ul>
                 <button @click="decrement()"  class="btn btn-success">vorige</button>
@@ -23,7 +25,8 @@
                 <br>
             </div>
             <div class="col-sm-6" v-if="details">
-                <CountryDetail v-if="selectedCountry"  @rating="onRating($event)"  :country="selectedCountry"/>
+                <CountryDetail v-if="selectedCountry"  @rating="onRating($event)"   @favorite="toggleFavorit()"
+                               :country="selectedCountry"/>
             </div>
         </div>
         <hr>
@@ -75,7 +78,14 @@
             },
             onRating(rating){
                 this.data.countries[this.selectedCountryIndex].rating+=rating;
+            },
+            toggleFavorit(){
+                if(this.data.countries[this.selectedCountryIndex].favorite===true)
+                    this.data.countries[this.selectedCountryIndex].favorite=false;
+                else
+                    this.data.countries[this.selectedCountryIndex].favorite=true;
             }
+
         },
         computed: {
             selectedCountry() {
